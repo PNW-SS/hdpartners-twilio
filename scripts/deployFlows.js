@@ -7,9 +7,9 @@ const client = require('twilio')(
 );
 
 async function run() {
-  const filePath = path.resolve(__dirname, '../flows/webinar-flow.json');
+  const filePath = path.resolve(__dirname, '../flows/production_git.json');
   const flow = JSON.parse(await fs.readFile(filePath, 'utf8'));
-  const friendlyName = 'webinar-flow.json';
+  const friendlyName = 'production_git.json';
 
   try {
     await client.studio.flowValidate.update({
