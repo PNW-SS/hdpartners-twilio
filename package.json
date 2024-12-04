@@ -1,11 +1,10 @@
 {
-  "name": "flows-example",
+  "name": "twilio-ci-test",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "twilio-run",
-    "ci:deploy-functions": "twilio-run deploy --load-system-env --env .env.example --account-sid=$ACCOUNT_SID --auth-token=$AUTH_TOKEN --production --override-existing-project"
+    "start": "twilio-run --env"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.46.2",
