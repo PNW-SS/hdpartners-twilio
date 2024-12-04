@@ -5,7 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "twilio-run",
-    "ci:deploy-functions": "twilio-run deploy --load-system-env --env .env.example --production --override-existing-project",
+    "ci:deploy-functions": "twilio-run deploy --load-system-env --env .env.example --account-sid=$ACCOUNT_SID --auth-token=$AUTH_TOKEN --production --override-existing-project",
     "ci:deploy-flows": "node ./scripts/deployFlows.js"
   },
   "dependencies": {
