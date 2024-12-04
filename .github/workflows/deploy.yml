@@ -61,6 +61,6 @@ jobs:
           
           # Deploy to the determined environment
           twilio serverless:deploy \
-            --service-name=example-deployed-with-github-actions \
+            --service-name=inventerra \
             --environment=$DEPLOY_ENV \
             --force
