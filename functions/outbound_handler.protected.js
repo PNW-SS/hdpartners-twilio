@@ -22,7 +22,7 @@ exports.handler = async function (context, event, callback) {
   
       const dial = twiml.dial({
         action: `${context.TWILIO_SERVER_URL}/outbound_action?operatorId=${encodeURIComponent(operatorId)}&customerCallSid=${customerCallSid}`,
-        callerId: context.TWILIO_NUMBER,
+        callerId: context.TWILIO_NUMBER, // TODO: Use HD verified number
       })
   
       try {

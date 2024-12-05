@@ -11,6 +11,8 @@ exports.handler = async function (context, event, callback) {
   const supabaseKey = context.SUPABASE_API_KEY;
   const supabase = createClient(supabaseUrl, supabaseKey);
 
+  console.log('Incoming Number:', incomingNumber);
+
   try {
     let updateParams = {
       friendlyName: friendlyName
