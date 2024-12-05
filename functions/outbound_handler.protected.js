@@ -21,7 +21,7 @@ exports.handler = async function (context, event, callback) {
     if (To !== 'queue') { // Create outbound dial
   
       const dial = twiml.dial({
-        action: `https://hd-partners-5655.twil.io/outbound_action?operatorId=${encodeURIComponent(operatorId)}&customerCallSid=${customerCallSid}`,
+        action: `${context.TWILIO_SERVER_URL}/outbound_action?operatorId=${encodeURIComponent(operatorId)}&customerCallSid=${customerCallSid}`,
         callerId: context.TWILIO_NUMBER,
       })
   
@@ -50,7 +50,7 @@ exports.handler = async function (context, event, callback) {
   
       dial.number({
         statusCallbackEvent: 'ringing answered completed',
-        statusCallback: `https://hd-partners-5655.twil.io/outbound_callback?operatorId=${encodeURIComponent(
+        statusCallback: `${context.TWILIO_SERVER_URL}/outbound_callback?operatorId=${encodeURIComponent(
           JSON.stringify(operatorId)
         )}&customerCallSid=${encodeURIComponent(customerCallSid)}&fromNumber=${encodeURIComponent(fromNumber)}&callerName=${encodeURIComponent(callerName)}`,
         statusCallbackMethod: 'POST'
@@ -59,7 +59,7 @@ exports.handler = async function (context, event, callback) {
     } else { // Connect to a queued caller
   
       const dial = twiml.dial({
-        action: `https://hd-partners-5655.twil.io/outbound_action?operatorId=${encodeURIComponent(operatorId)}`,
+        action: `${context.TWILIO_SERVER_URL}/outbound_action?operatorId=${encodeURIComponent(operatorId)}`,
         callerId: context.TWILIO_NUMBER,
         timeout: 2
       })
@@ -69,7 +69,7 @@ exports.handler = async function (context, event, callback) {
       // TODO: Test case where someone calls in on operator after they dial into dequeue on client, but before the dequeue callback is executed
   
       dial.queue({
-        url: `https://hd-partners-5655.twil.io/dequeue_callback?operatorId=${encodeURIComponent(operatorId)}`
+        url: `${context.TWILIO_SERVER_URL}/dequeue_callback?operatorId=${encodeURIComponent(operatorId)}`
       }, 'main');
     }
   

@@ -83,7 +83,7 @@ async function triggerCallOperators(operatorsToCall, supabase, twiml, client, ca
 
     const gather = twiml.gather({
       numDigits: 1,
-      action: `https://hd-partners-5655.twil.io/add_agent_or_voicemail?currentlyCallingId=${currentlyCalling.id}&callSid=${callSid}`,
+      action: `${context.TWILIO_SERVER_URL}/add_agent_or_voicemail?currentlyCallingId=${currentlyCalling.id}&callSid=${callSid}`,
       method: 'POST',
       timeout: 5,
     });
@@ -91,8 +91,8 @@ async function triggerCallOperators(operatorsToCall, supabase, twiml, client, ca
     gather.say(`Incoming call from ${callerName}.`);
 
     const redirectUrl = operatorsToCall.length > 0
-      ? `https://hd-partners-5655.twil.io/call_additional_operators?operatorsToCall=${encodeURIComponent(JSON.stringify(operatorsToCall))}&callSid=${callSid}`
-      : `https://hd-partners-5655.twil.io/nobody_picked_up?callSid=${callSid}`; // URL to redirect if no more operators to call
+      ? `${context.TWILIO_SERVER_URL}/call_additional_operators?operatorsToCall=${encodeURIComponent(JSON.stringify(operatorsToCall))}&callSid=${callSid}`
+      : `${context.TWILIO_SERVER_URL}/nobody_picked_up?callSid=${callSid}`; // URL to redirect if no more operators to call
 
     twiml.redirect({
       method: 'POST'

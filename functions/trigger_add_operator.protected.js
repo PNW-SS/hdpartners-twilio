@@ -55,7 +55,7 @@ exports.handler = async function (context, event, callback) {
 
       const gather = twiml.gather({
         numDigits: 1,
-        action: `https://hd-partners-5655.twil.io/add_agent_or_voicemail?currentlyCallingId=${currentlyCalling.id}&callSid=${callSid}`,
+        action: `${context.TWILIO_SERVER_URL}/add_agent_or_voicemail?currentlyCallingId=${currentlyCalling.id}&callSid=${callSid}`,
         method: 'POST',
         timeout: 5,
       });
@@ -63,8 +63,8 @@ exports.handler = async function (context, event, callback) {
       gather.say(`Incoming call from ${callerName}`);
 
       const redirectUrl = operatorsToCall.length > 0
-        ? `https://hd-partners-5655.twil.io/call_additional_operators?operatorsToCall=${encodeURIComponent(JSON.stringify(operatorsToCall))}&customerCallSid=${callSid}`
-        : `https://hd-partners-5655.twil.io/nobody_picked_up?customerCallSid=${callSid}`;
+        ? `${context.TWILIO_SERVER_URL}/call_additional_operators?operatorsToCall=${encodeURIComponent(JSON.stringify(operatorsToCall))}&customerCallSid=${callSid}`
+        : `${context.TWILIO_SERVER_URL}/nobody_picked_up?customerCallSid=${callSid}`;
 
       twiml.redirect({
         method: 'POST'

@@ -43,7 +43,7 @@ exports.handler = async function (context, event, callback) {
         const twiml = new Twilio.twiml.VoiceResponse();
         const gather = twiml.gather({
           numDigits: 1,
-          action: `https://hd-partners-5655.twil.io/add_agent_or_voicemail?currentlyCallingId=${currentlyCalling.id}&callSid=${customerCallSid}`,
+          action: `${context.TWILIO_SERVER_URL}/add_agent_or_voicemail?currentlyCallingId=${currentlyCalling.id}&callSid=${customerCallSid}`,
           method: 'POST',
           timeout: 5,
         });
@@ -51,8 +51,8 @@ exports.handler = async function (context, event, callback) {
         gather.say(`Incoming call from ${callerName}`);
 
         const redirectUrl = operatorsToCall.length > 0
-          ? `https://hd-partners-5655.twil.io/call_additional_operators?customerCallSid=${customerCallSid}&operatorsToCall=${encodeURIComponent(JSON.stringify(operatorsToCall))}`
-          : `https://hd-partners-5655.twil.io/nobody_picked_up?customerCallSid=${customerCallSid}`;
+          ? `${context.TWILIO_SERVER_URL}/call_additional_operators?customerCallSid=${customerCallSid}&operatorsToCall=${encodeURIComponent(JSON.stringify(operatorsToCall))}`
+          : `${context.TWILIO_SERVER_URL}/nobody_picked_up?customerCallSid=${customerCallSid}`;
         twiml.redirect({ method: 'POST' }, redirectUrl);
 
         client.calls
