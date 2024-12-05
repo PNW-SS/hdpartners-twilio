@@ -8,8 +8,12 @@ on:
       - dev
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
+
+    # Dynamically set the environment based on the branch
+    environment:
+      name: ${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }}
 
     steps:
       # 1. Checkout the repository
@@ -34,24 +38,24 @@ jobs:
       - name: Install dependencies for the Twilio function
         run: npm ci
 
-      # 5. Determine Deployment Environment and Deploy
+      # 5. Install Twilio CLI and Deploy
       - name: Install Twilio CLI and Deploy
         env:
           TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
           TWILIO_API_KEY: ${{ secrets.TWILIO_API_KEY }}
           TWILIO_API_SECRET: ${{ secrets.TWILIO_API_SECRET }}
-          JWT_SECRET_STAGING: ${{ secrets.JWT_SECRET_STAGING }}
-          SUPABASE_API_KEY_STAGING: ${{ secrets.SUPABASE_API_KEY_STAGING }}
-          SUPABASE_URL_STAGING: ${{ secrets.SUPABASE_URL_STAGING }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          SUPABASE_API_KEY: ${{ secrets.SUPABASE_API_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           ACCOUNT_SID: ${{ secrets.ACCOUNT_SID }}
-          TWILIO_NUMBER_STAGING: ${{ secrets.TWILIO_NUMBER_STAGING }}
+          TWILIO_NUMBER: ${{ secrets.TWILIO_NUMBER }}
           QUEUE_NAME: ${{ secrets.QUEUE_NAME }}
           AUTH_TOKEN: ${{ secrets.AUTH_TOKEN }}
           SUMMARY_SERVICE_SID: ${{ secrets.SUMMARY_SERVICE_SID }}
           FALLBACK_NUMBER: ${{ secrets.FALLBACK_NUMBER }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           DEVELOPER_SUPPORT_NUMBER: ${{ secrets.DEVELOPER_SUPPORT_NUMBER }}
-
+          ENV: ${{ secrets.ENV }}
         run: |
           # Install Twilio CLI globally
           npm install twilio-cli -g
@@ -59,7 +63,7 @@ jobs:
           # Install the serverless plugin for Twilio CLI
           twilio plugins:install @twilio-labs/plugin-serverless
           
-          # Determine the branch and set the environment accordingly
+          # Determine the branch and set the deployment environment
           if [ "${GITHUB_REF}" == "refs/heads/main" ]; then
             DEPLOY_ENV=prod
           elif [ "${GITHUB_REF}" == "refs/heads/dev" ]; then
