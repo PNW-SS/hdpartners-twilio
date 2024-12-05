@@ -2,8 +2,8 @@
 exports.handler = async function(context, event, callback) {
   const { createClient } = require('@supabase/supabase-js');
   const supabase = createClient(
-    context.SUPABASE_URL_STAGING,
-    context.SUPABASE_API_KEY_STAGING
+    context.SUPABASE_URL,
+    context.SUPABASE_API_KEY
   );	
 
   const { CallSid, operatorId } = event

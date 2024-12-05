@@ -8,8 +8,8 @@ exports.handler = async function (context, event, callback) {
   const reasonParticipantLeft = event.ReasonParticipantLeft
   const reasonConferenceEnded = event.ReasonConferenceEnded;
   const endConferenceOnExit = event.EndConferenceOnExit
-  const supabaseUrl = context.SUPABASE_URL_STAGING;
-  const supabaseKey = context.SUPABASE_API_KEY_STAGING;
+  const supabaseUrl = context.SUPABASE_URL;
+  const supabaseKey = context.SUPABASE_API_KEY;
   const supabase = createClient(supabaseUrl, supabaseKey);
   const client = context.getTwilioClient();
 

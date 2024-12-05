@@ -1,8 +1,8 @@
 const { createClient } = require('@supabase/supabase-js');
 
 exports.handler = async function (context, event, callback) {
-  const supabaseUrl = context.SUPABASE_URL_STAGING;
-  const supabaseKey = context.SUPABASE_API_KEY_STAGING;
+  const supabaseUrl = context.SUPABASE_URL;
+  const supabaseKey = context.SUPABASE_API_KEY;
   const supabase = createClient(supabaseUrl, supabaseKey);
   const client = context.getTwilioClient();
   let operatorsToCall = JSON.parse(decodeURIComponent(event.operatorsToCall));
@@ -58,7 +58,7 @@ exports.handler = async function (context, event, callback) {
         client.calls
           .create({
             to: currentlyCalling.employees.phone,
-            from: context.TWILIO_NUMBER_STAGING,
+            from: context.TWILIO_NUMBER,
             twiml: twiml.toString(),
           })
           .then(call => {

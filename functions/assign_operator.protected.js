@@ -3,8 +3,8 @@
 exports.handler = async function (context, event, callback) {
     const { createClient } = require('@supabase/supabase-js');
     const supabase = createClient(
-      context.SUPABASE_URL_STAGING,
-      context.SUPABASE_API_KEY_STAGING
+      context.SUPABASE_URL,
+      context.SUPABASE_API_KEY
     );
     const twiml = new Twilio.twiml.VoiceResponse();
     const { customerCallSid, fromNumber } = event;
@@ -56,7 +56,7 @@ exports.handler = async function (context, event, callback) {
       excludeOperatorIds.push(operator.id);
   
       const dial = twiml.dial({
-        callerId: context.TWILIO_NUMBER_STAGING,
+        callerId: context.TWILIO_NUMBER,
         timeout: 20,
         action: `https://hd-partners-5655.twil.io/assign_operator_action?excludeOperatorIds=${encodeURIComponent(
           JSON.stringify(excludeOperatorIds)

@@ -1,8 +1,8 @@
 
 exports.handler = async function (context, event, callback) {
     const supabase = require('@supabase/supabase-js').createClient(
-      context.SUPABASE_URL_STAGING,
-      context.SUPABASE_API_KEY_STAGING
+      context.SUPABASE_URL,
+      context.SUPABASE_API_KEY
     );
   
     const { CallSid, Caller, To } = event
@@ -22,7 +22,7 @@ exports.handler = async function (context, event, callback) {
   
       const dial = twiml.dial({
         action: `https://hd-partners-5655.twil.io/outbound_action?operatorId=${encodeURIComponent(operatorId)}&customerCallSid=${customerCallSid}`,
-        callerId: context.TWILIO_NUMBER_STAGING,
+        callerId: context.TWILIO_NUMBER,
       })
   
       try {
@@ -60,7 +60,7 @@ exports.handler = async function (context, event, callback) {
   
       const dial = twiml.dial({
         action: `https://hd-partners-5655.twil.io/outbound_action?operatorId=${encodeURIComponent(operatorId)}`,
-        callerId: context.TWILIO_NUMBER_STAGING,
+        callerId: context.TWILIO_NUMBER,
         timeout: 2
       })
   

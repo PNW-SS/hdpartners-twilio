@@ -8,8 +8,8 @@ exports.handler = async function (context, event, callback) {
     const mediaArray = JSON.parse(event.Media);
 
     // Create a Supabase client instance
-    const supabaseUrl = context.SUPABASE_URL_STAGING;
-    const supabaseKey = context.SUPABASE_API_KEY_STAGING;
+    const supabaseUrl = context.SUPABASE_URL;
+    const supabaseKey = context.SUPABASE_API_KEY;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     // Process each media file

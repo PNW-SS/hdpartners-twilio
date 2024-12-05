@@ -4,8 +4,8 @@ exports.handler = async function (context, event, callback) {
   const callSid = event.customerCallSid;
   const queueName = context.QUEUE_NAME;
   const client = new Twilio(context.ACCOUNT_SID, context.AUTH_TOKEN);
-  const supabaseUrl = context.SUPABASE_URL_STAGING;
-  const supabaseKey = context.SUPABASE_API_KEY_STAGING;
+  const supabaseUrl = context.SUPABASE_URL;
+  const supabaseKey = context.SUPABASE_API_KEY;
   const supabase = createClient(supabaseUrl, supabaseKey);
 
   try {
@@ -67,7 +67,7 @@ async function checkQueueSize(client, queueSid, callback, supabase, context, cal
         const phoneNumber = operator.employees.phone;
         return client.messages.create({
           body: 'Warning: ' + callerName + ' is left unhandled in the queue. Call in to connect.',
-          from: context.TWILIO_NUMBER_STAGING,
+          from: context.TWILIO_NUMBER,
           to: phoneNumber,
         });
       });

@@ -5,8 +5,8 @@ exports.handler = async function (context, event, callback) {
 
   const callSid = event.CallSid;
 
-  const supabaseUrl = context.SUPABASE_URL_STAGING;
-  const supabaseKey = context.SUPABASE_API_KEY_STAGING;
+  const supabaseUrl = context.SUPABASE_URL;
+  const supabaseKey = context.SUPABASE_API_KEY;
   const supabase = createClient(supabaseUrl, supabaseKey);
   const twiml = new Twilio.twiml.VoiceResponse();
   const client = new Twilio(context.ACCOUNT_SID, context.AUTH_TOKEN);
@@ -101,7 +101,7 @@ async function triggerCallOperators(operatorsToCall, supabase, twiml, client, ca
     client.calls
       .create({
         to: currentlyCalling.employees.phone,
-        from: context.TWILIO_NUMBER_STAGING,
+        from: context.TWILIO_NUMBER,
         twiml: twiml.toString(),
       })
       .then(call => {
