@@ -55,7 +55,6 @@ jobs:
           FALLBACK_NUMBER: ${{ secrets.FALLBACK_NUMBER }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           DEVELOPER_SUPPORT_NUMBER: ${{ secrets.DEVELOPER_SUPPORT_NUMBER }}
-          ENV: ${{ secrets.ENV }}
         run: |
           # Install Twilio CLI globally
           npm install twilio-cli -g
