@@ -7,7 +7,7 @@ const client = require('twilio')(
 );
 
 async function run() {
-  const filePath = path.resolve(__dirname, '../flows/production_git.json');
+  const filePath = path.resolve(__dirname, '../flows/production_gitss.json');
   const flow = JSON.parse(await fs.readFile(filePath, 'utf8'));
   const friendlyName = 'production_git.json';
 
