@@ -79,4 +79,4 @@ jobs:
           twilio serverless:deploy \
             --service-name=inventerra \
             --environment=$DEPLOY_ENV \
-            --force
+            --override-existing-service
