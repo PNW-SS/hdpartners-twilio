@@ -28,7 +28,7 @@ exports.handler = async function (context, event, callback) {
     });
   
     gather.play(
-      'https://ochre-antelope-4265.twil.io/assets/gather_compound.mp3'
+      `${context.TWILIO_SERVER_URL}/gather_compound.mp3`
     );
   
     return callback(null, twiml);

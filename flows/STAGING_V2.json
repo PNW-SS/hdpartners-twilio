@@ -1,5 +1,5 @@
 {
-  "description": "PRODUCTION_GIT",
+  "description": "STAGING_V2",
   "states": [
     {
       "name": "Trigger",
@@ -42,13 +42,13 @@
         }
       ],
       "properties": {
-        "service_sid": "ZS13d4cf6c807eef843d307c8598f0fe47",
-        "environment_sid": "ZEd93fadf76835a8139823aaf110d0e6f9",
+        "service_sid": "ZS013e66bc1d753d397f4877ea932122a8",
+        "environment_sid": "ZE5a6aab3e605af6cd0c72de689896257d",
         "offset": {
           "x": 950,
           "y": -1650
         },
-        "function_sid": "ZH6cf73b17077272007d48f8dae7c6ab29",
+        "function_sid": "ZH7e4f5078ed805b9329700b3bed808e20",
         "parameters": [
           {
             "value": "{{trigger.conversation.ConversationSid}}",
@@ -63,7 +63,7 @@
             "key": "incomingMessage"
           }
         ],
-        "url": "https://hd-partners-5655.twil.io/create_shared_conversation"
+        "url": "https://inventerra-2730-dev.twil.io/create_shared_conversation"
       }
     },
     {
@@ -71,7 +71,7 @@
       "type": "run-function",
       "transitions": [
         {
-          "next": "get_available_operators",
+          "next": "route_based_on_open",
           "event": "success"
         },
         {
@@ -80,14 +80,14 @@
         }
       ],
       "properties": {
-        "service_sid": "ZS13d4cf6c807eef843d307c8598f0fe47",
-        "environment_sid": "ZEd93fadf76835a8139823aaf110d0e6f9",
+        "service_sid": "ZS013e66bc1d753d397f4877ea932122a8",
+        "environment_sid": "ZE5a6aab3e605af6cd0c72de689896257d",
         "offset": {
           "x": -410,
           "y": -660
         },
-        "function_sid": "ZH4e06bf1532fbcbe14d31c370e112f987",
-        "url": "https://hd-partners-5655.twil.io/operating_hours"
+        "function_sid": "ZHa13b7595b8c0277ff8ceda05969070e7",
+        "url": "https://inventerra-2730-dev.twil.io/operating_hours"
       }
     },
     {
@@ -137,7 +137,7 @@
         }
       ],
       "properties": {
-        "play": "https://ochre-antelope-4265.twil.io/assets/business_closed.mp3",
+        "play": "https://inventerra-2730-dev.twil.io/business_closed.mp3",
         "voice": "alice",
         "offset": {
           "x": -320,
@@ -171,7 +171,7 @@
         }
       ],
       "properties": {
-        "play": "https://ochre-antelope-4265.twil.io/assets/bens_or_dir.mp3",
+        "play": "https://inventerra-2730-dev.twil.io/bens_or_dir.mp3",
         "voice": "alice",
         "number_of_digits": 1,
         "speech_timeout": "auto",
@@ -319,8 +319,8 @@
       ],
       "properties": {
         "offset": {
-          "x": -820,
-          "y": 1920
+          "x": -590,
+          "y": 1910
         },
         "service": "{{trigger.message.InstanceSid}}",
         "channel": "{{trigger.message.ChannelSid}}",
@@ -344,14 +344,14 @@
         }
       ],
       "properties": {
-        "service_sid": "ZS13d4cf6c807eef843d307c8598f0fe47",
-        "environment_sid": "ZEd93fadf76835a8139823aaf110d0e6f9",
+        "service_sid": "ZS013e66bc1d753d397f4877ea932122a8",
+        "environment_sid": "ZE5a6aab3e605af6cd0c72de689896257d",
         "offset": {
           "x": -130,
           "y": 730
         },
-        "function_sid": "ZH2003e0cce629f49df54b696ddeec60a2",
-        "url": "https://hd-partners-5655.twil.io/get_available_operators"
+        "function_sid": "ZH277f7f4f8994090ee0ad4793b5fc39a6",
+        "url": "https://inventerra-2730-dev.twil.io/get_available_operators"
       }
     },
     {
@@ -395,7 +395,7 @@
         }
       ],
       "properties": {
-        "play": "https://ochre-antelope-4265.twil.io/assets/no_availabilities_enabled.mp3",
+        "play": "https://inventerra-2730-dev.twil.io/no_availabilities_enabled.mp3",
         "voice": "alice",
         "offset": {
           "x": -260,
@@ -421,7 +421,7 @@
         }
       ],
       "properties": {
-        "play": "https://ochre-antelope-4265.twil.io/assets/directory_options.mp3",
+        "play": "https://inventerra-2730-dev.twil.io/directory_options.mp3",
         "voice": "alice",
         "number_of_digits": 1,
         "speech_timeout": "auto",
@@ -446,7 +446,6 @@
           "event": "noMatch"
         },
         {
-          "next": "connect_to_michelle",
           "event": "match",
           "conditions": [
             {
@@ -460,7 +459,6 @@
           ]
         },
         {
-          "next": "connect_to_nick",
           "event": "match",
           "conditions": [
             {
@@ -474,7 +472,6 @@
           ]
         },
         {
-          "next": "connect_to_doug",
           "event": "match",
           "conditions": [
             {
@@ -488,7 +485,6 @@
           ]
         },
         {
-          "next": "connect_to_callie",
           "event": "match",
           "conditions": [
             {
@@ -502,7 +498,6 @@
           ]
         },
         {
-          "next": "connect_to_chris",
           "event": "match",
           "conditions": [
             {
@@ -548,7 +543,7 @@
         }
       ],
       "properties": {
-        "play": "https://ochre-antelope-4265.twil.io/assets/invalid_input.mp3",
+        "play": "https://inventerra-2730-dev.twil.io/invalid_input.mp3",
         "voice": "alice",
         "offset": {
           "x": 150,
@@ -581,116 +576,6 @@
       }
     },
     {
-      "name": "connect_to_michelle",
-      "type": "connect-call-to",
-      "transitions": [
-        {
-          "event": "callCompleted"
-        },
-        {
-          "event": "hangup"
-        }
-      ],
-      "properties": {
-        "offset": {
-          "x": 580,
-          "y": 1440
-        },
-        "caller_id": "{{contact.channel.address}}",
-        "noun": "number",
-        "to": "+12067997941",
-        "timeout": 30
-      }
-    },
-    {
-      "name": "connect_to_nick",
-      "type": "connect-call-to",
-      "transitions": [
-        {
-          "event": "callCompleted"
-        },
-        {
-          "event": "hangup"
-        }
-      ],
-      "properties": {
-        "offset": {
-          "x": 920,
-          "y": 1440
-        },
-        "caller_id": "{{contact.channel.address}}",
-        "noun": "number",
-        "to": "+12067192805",
-        "timeout": 30
-      }
-    },
-    {
-      "name": "connect_to_doug",
-      "type": "connect-call-to",
-      "transitions": [
-        {
-          "event": "callCompleted"
-        },
-        {
-          "event": "hangup"
-        }
-      ],
-      "properties": {
-        "offset": {
-          "x": 1260,
-          "y": 1440
-        },
-        "caller_id": "{{contact.channel.address}}",
-        "noun": "number",
-        "to": "+14252603890",
-        "timeout": 30
-      }
-    },
-    {
-      "name": "connect_to_callie",
-      "type": "connect-call-to",
-      "transitions": [
-        {
-          "event": "callCompleted"
-        },
-        {
-          "event": "hangup"
-        }
-      ],
-      "properties": {
-        "offset": {
-          "x": 1600,
-          "y": 1440
-        },
-        "caller_id": "{{contact.channel.address}}",
-        "noun": "number",
-        "to": "+12067186651",
-        "timeout": 30
-      }
-    },
-    {
-      "name": "connect_to_chris",
-      "type": "connect-call-to",
-      "transitions": [
-        {
-          "event": "callCompleted"
-        },
-        {
-          "event": "hangup"
-        }
-      ],
-      "properties": {
-        "offset": {
-          "x": 1940,
-          "y": 1440
-        },
-        "caller_id": "{{contact.channel.address}}",
-        "noun": "number",
-        "to": "+12067185646",
-        "timeout": 30
-      }
-    },
-    {
       "name": "run_operator_check",
       "type": "run-function",
       "transitions": [
@@ -704,20 +589,20 @@
         }
       ],
       "properties": {
-        "service_sid": "ZS13d4cf6c807eef843d307c8598f0fe47",
-        "environment_sid": "ZEd93fadf76835a8139823aaf110d0e6f9",
+        "service_sid": "ZS013e66bc1d753d397f4877ea932122a8",
+        "environment_sid": "ZE5a6aab3e605af6cd0c72de689896257d",
         "offset": {
           "x": 110,
           "y": -1200
         },
-        "function_sid": "ZH2ecafc097d79a3e9a73836848ca8d598",
+        "function_sid": "ZH311004b389d81a0442e789bcab61ff0c",
         "parameters": [
           {
             "value": "{{trigger.call.From}}",
             "key": "from"
           }
         ],
-        "url": "https://hd-partners-5655.twil.io/get_all_operators"
+        "url": "https://inventerra-2730-dev.twil.io/get_all_operators"
       }
     },
     {
@@ -785,7 +670,7 @@
         }
       ],
       "properties": {
-        "play": "https://ochre-antelope-4265.twil.io/assets/recording_disclosure.mp3",
+        "play": "https://inventerra-2730-dev.twil.io/recording_disclosure.mp3",
         "voice": "man",
         "offset": {
           "x": 210,
@@ -862,7 +747,6 @@
           "event": "noMatch"
         },
         {
-          "next": "connect_to_michelle",
           "event": "match",
           "conditions": [
             {
@@ -876,7 +760,6 @@
           ]
         },
         {
-          "next": "connect_to_nick",
           "event": "match",
           "conditions": [
             {
@@ -890,7 +773,6 @@
           ]
         },
         {
-          "next": "connect_to_doug",
           "event": "match",
           "conditions": [
             {
@@ -904,7 +786,6 @@
           ]
         },
         {
-          "next": "connect_to_callie",
           "event": "match",
           "conditions": [
             {
@@ -918,7 +799,6 @@
           ]
         },
         {
-          "next": "connect_to_chris",
           "event": "match",
           "conditions": [
             {
@@ -1012,14 +892,14 @@
         }
       ],
       "properties": {
-        "service_sid": "ZS13d4cf6c807eef843d307c8598f0fe47",
-        "environment_sid": "ZEd93fadf76835a8139823aaf110d0e6f9",
+        "service_sid": "ZS013e66bc1d753d397f4877ea932122a8",
+        "environment_sid": "ZE5a6aab3e605af6cd0c72de689896257d",
         "offset": {
           "x": 10,
           "y": -1660
         },
-        "function_sid": "ZH0fb8aa7e224c40e72cb8334a01f6e8a8",
-        "url": "https://hd-partners-5655.twil.io/is_enabled"
+        "function_sid": "ZH8a3691315b151a64f6ef729f7cba49da",
+        "url": "https://inventerra-2730-dev.twil.io/is_enabled"
       }
     },
     {
@@ -1102,13 +982,13 @@
         }
       ],
       "properties": {
-        "service_sid": "ZS13d4cf6c807eef843d307c8598f0fe47",
-        "environment_sid": "ZEd93fadf76835a8139823aaf110d0e6f9",
+        "service_sid": "ZS013e66bc1d753d397f4877ea932122a8",
+        "environment_sid": "ZE5a6aab3e605af6cd0c72de689896257d",
         "offset": {
           "x": 180,
           "y": 1680
         },
-        "function_sid": "ZH8e6fd55e570a44b69a9c53078ed79127",
+        "function_sid": "ZH5533cb430d3cc74ee99fcea80a67b4d7",
         "parameters": [
           {
             "value": "{{widgets.get_caller_id.parsed.resp}}",
@@ -1123,7 +1003,7 @@
             "key": "fromNumber"
           }
         ],
-        "url": "https://hd-partners-5655.twil.io/assign_operator"
+        "url": "https://inventerra-2730-dev.twil.io/assign_operator"
       }
     },
     {
@@ -1131,7 +1011,7 @@
       "type": "run-function",
       "transitions": [
         {
-          "next": "check_if_business_is_open",
+          "next": "get_available_operators",
           "event": "success"
         },
         {
@@ -1140,20 +1020,20 @@
         }
       ],
       "properties": {
-        "service_sid": "ZS13d4cf6c807eef843d307c8598f0fe47",
-        "environment_sid": "ZEd93fadf76835a8139823aaf110d0e6f9",
+        "service_sid": "ZS013e66bc1d753d397f4877ea932122a8",
+        "environment_sid": "ZE5a6aab3e605af6cd0c72de689896257d",
         "offset": {
           "x": -610,
           "y": -910
         },
-        "function_sid": "ZH52ca46c8e7056dfdb1cfea332fdc88c2",
+        "function_sid": "ZH9c5069434c0d0a332c557d6f90bb78ec",
         "parameters": [
           {
             "value": "{{trigger.call.From}}",
             "key": "fromNumber"
           }
         ],
-        "url": "https://hd-partners-5655.twil.io/get_caller_id"
+        "url": "https://inventerra-2730-dev.twil.io/get_caller_id"
       }
     },
     {
