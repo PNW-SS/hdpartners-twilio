@@ -137,7 +137,7 @@
         }
       ],
       "properties": {
-        "play": "https://ochre-antelope-4265.twil.io/assets/business_closed.mp3",
+        "play": "https://inventerra-2730-dev.twil.io/business_closed.mp3",
         "voice": "alice",
         "offset": {
           "x": -320,
@@ -171,7 +171,7 @@
         }
       ],
       "properties": {
-        "play": "https://ochre-antelope-4265.twil.io/assets/bens_or_dir.mp3",
+        "play": "https://inventerra-2730-dev.twil.io/bens_or_dir.mp3",
         "voice": "alice",
         "number_of_digits": 1,
         "speech_timeout": "auto",
@@ -395,7 +395,7 @@
         }
       ],
       "properties": {
-        "play": "https://ochre-antelope-4265.twil.io/assets/no_availabilities_enabled.mp3",
+        "play": "https://inventerra-2730-dev.twil.io/no_availabilities_enabled.mp3",
         "voice": "alice",
         "offset": {
           "x": -260,
@@ -421,7 +421,7 @@
         }
       ],
       "properties": {
-        "play": "https://ochre-antelope-4265.twil.io/assets/directory_options.mp3",
+        "play": "https://inventerra-2730-dev.twil.io/directory_options.mp3",
         "voice": "alice",
         "number_of_digits": 1,
         "speech_timeout": "auto",
@@ -543,7 +543,7 @@
         }
       ],
       "properties": {
-        "play": "https://ochre-antelope-4265.twil.io/assets/invalid_input.mp3",
+        "play": "https://inventerra-2730-dev.twil.io/invalid_input.mp3",
         "voice": "alice",
         "offset": {
           "x": 150,
@@ -670,7 +670,7 @@
         }
       ],
       "properties": {
-        "play": "https://ochre-antelope-4265.twil.io/assets/recording_disclosure.mp3",
+        "play": "https://inventerra-2730-dev.twil.io/recording_disclosure.mp3",
         "voice": "man",
         "offset": {
           "x": 210,
