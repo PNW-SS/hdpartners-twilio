@@ -1,7 +1,7 @@
 exports.handler = async function (context, event, callback) {
     const supabase = require('@supabase/supabase-js').createClient(
-      context.SUPABASE_URL_STAGING,
-      context.SUPABASE_API_KEY_STAGING
+      context.SUPABASE_URL,
+      context.SUPABASE_API_KEY
     );
   
     const twiml = new Twilio.twiml.VoiceResponse();

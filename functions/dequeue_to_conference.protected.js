@@ -96,7 +96,7 @@ async function announceNoMoreCallers(client, callSid, callback) {
 }
 
 async function logStartOfConference(callSid, conferenceName, context, conferenceSid) {
-    const supabase = createClient(context.SUPABASE_URL_STAGING, context.SUPABASE_API_KEY_STAGING);
+    const supabase = createClient(context.SUPABASE_URL, context.SUPABASE_API_KEY);
     try {
         const { error } = await supabase.from('calls').update({
             call_status: 'dequeued',
@@ -115,7 +115,7 @@ async function logStartOfConference(callSid, conferenceName, context, conference
 }
 
 async function logEndOfConference(conferenceName, context, callback, callSid) {
-    const supabase = createClient(context.SUPABASE_URL_STAGING, context.SUPABASE_API_KEY_STAGING);
+    const supabase = createClient(context.SUPABASE_URL, context.SUPABASE_API_KEY);
     const endTime = new Date().toISOString();
     try {
         const { error } = await supabase.from('calls').update({ end_time: endTime }).eq('operator', conferenceName).is('end_time', null);

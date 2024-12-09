@@ -1,7 +1,7 @@
 exports.handler = async function (context, event, callback) {
     const supabase = require('@supabase/supabase-js').createClient(
-      context.SUPABASE_URL_STAGING,
-      context.SUPABASE_API_KEY_STAGING
+      context.SUPABASE_URL,
+      context.SUPABASE_API_KEY
     );
   
     const twiml = new Twilio.twiml.VoiceResponse();
@@ -36,7 +36,7 @@ exports.handler = async function (context, event, callback) {
       // Redirect back to the incoming call handler to try the next operator
       twiml.redirect({
         method: 'POST',
-      }, `https://hd-partners-5655.twil.io/assign_operator?excludeOperatorIds=${encodeURIComponent(JSON.stringify(excludeOperatorIds))}&customerCallSid=${encodeURIComponent(customerCallSid)}&fromNumber=${encodeURIComponent(fromNumber)}&callerName=${encodeURIComponent(JSON.stringify(callerName))}`);
+      }, `${context.TWILIO_SERVER_URL}/assign_operator?excludeOperatorIds=${encodeURIComponent(JSON.stringify(excludeOperatorIds))}&customerCallSid=${encodeURIComponent(customerCallSid)}&fromNumber=${encodeURIComponent(fromNumber)}&callerName=${encodeURIComponent(JSON.stringify(callerName))}`);
   
     }
     

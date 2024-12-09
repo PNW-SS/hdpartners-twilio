@@ -1,8 +1,8 @@
 
 exports.handler = async function (context, event, callback) {
     const supabase = require('@supabase/supabase-js').createClient(
-      context.SUPABASE_URL_STAGING,
-      context.SUPABASE_API_KEY_STAGING
+      context.SUPABASE_URL,
+      context.SUPABASE_API_KEY
     );
   
     const { customerCallSid, fromNumber, callerName } = event
@@ -21,7 +21,7 @@ exports.handler = async function (context, event, callback) {
     let twiml = new Twilio.twiml.VoiceResponse();
   
     const gather = twiml.gather({
-      action: 'https://hd-partners-5655.twil.io/call_back_result',
+      action: `${context.TWILIO_SERVER_URL}/call_back_result`,
       method: 'POST',
       timeout: 1,
       numDigits: 1,

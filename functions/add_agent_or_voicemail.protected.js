@@ -7,7 +7,7 @@ exports.handler = function (context, event, callback) {
       console.log('Sending to voicemail');
       twiml.redirect({
         method: 'POST'
-      }, `https://hd-partners-5655.twil.io/dequeue_to_voicemail?callSid=${callSid}`);
+      }, `${context.TWILIO_SERVER_URL}/dequeue_to_voicemail?callSid=${callSid}`);
     } else {
       console.log('Connecting call to operator');
       const dial = twiml.dial();
@@ -15,7 +15,7 @@ exports.handler = function (context, event, callback) {
         beep: true,
         startConferenceOnEnter: true,
         endConferenceOnExit: true,
-        statusCallback: `https://hd-partners-5655.twil.io/dequeue_to_conference?clientCallSid=${callSid}`,
+        statusCallback: `${context.TWILIO_SERVER_URL}/dequeue_to_conference?clientCallSid=${callSid}`,
         statusCallbackMethod: 'GET',
         statusCallbackEvent: ['join', 'leave']
       }, currentlyCallingId);

@@ -7,8 +7,8 @@ exports.handler = async function (context, event, callback) {
   const callSid = event.CallSid;
   const queueResult = event.QueueResult
 
-  const supabaseUrl = context.SUPABASE_URL_STAGING;
-  const supabaseKey = context.SUPABASE_API_KEY_STAGING;
+  const supabaseUrl = context.SUPABASE_URL;
+  const supabaseKey = context.SUPABASE_API_KEY;
   const supabase = createClient(supabaseUrl, supabaseKey);
 
   const endTime = new Date().toISOString();

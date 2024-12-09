@@ -3,8 +3,8 @@
 exports.handler = async function (context, event, callback) {
     const { createClient } = require('@supabase/supabase-js');
     const supabase = createClient(
-      context.SUPABASE_URL_STAGING,
-      context.SUPABASE_API_KEY_STAGING
+      context.SUPABASE_URL,
+      context.SUPABASE_API_KEY
     );
     const twiml = new Twilio.twiml.VoiceResponse();
     const { customerCallSid, fromNumber } = event;
@@ -56,21 +56,21 @@ exports.handler = async function (context, event, callback) {
       excludeOperatorIds.push(operator.id);
   
       const dial = twiml.dial({
-        callerId: context.TWILIO_NUMBER_STAGING,
+        callerId: context.TWILIO_NUMBER,
         timeout: 20,
-        action: `https://hd-partners-5655.twil.io/assign_operator_action?excludeOperatorIds=${encodeURIComponent(
+        action: `${context.TWILIO_SERVER_URL}/assign_operator_action?excludeOperatorIds=${encodeURIComponent(
           JSON.stringify(excludeOperatorIds)
         )}&operatorId=${encodeURIComponent(
           operator.id
         )}&customerCallSid=${encodeURIComponent(customerCallSid)}&fromNumber=${encodeURIComponent(fromNumber)}&callerName=${encodeURIComponent(callerName)}`,
         method: 'POST',
         record: 'record-from-answer-dual',
-        recordingStatusCallback: 'https://hd-partners-5655.twil.io/recording_callback'
+        recordingStatusCallback: `${context.TWILIO_SERVER_URL}/recording_callback`
       });
       const client = dial.client(
         {
           statusCallbackEvent: 'initiated answered completed',
-          statusCallback: `https://hd-partners-5655.twil.io/assign_operator_callback?operatorId=${encodeURIComponent(
+          statusCallback: `${context.TWILIO_SERVER_URL}/assign_operator_callback?operatorId=${encodeURIComponent(
             JSON.stringify(operator.id)
           )}&customerCallSid=${encodeURIComponent(customerCallSid)}&fromNumber=${encodeURIComponent(fromNumber)}&callerName=${encodeURIComponent(callerName)}`,
           statusCallbackMethod: 'POST',
@@ -85,10 +85,10 @@ exports.handler = async function (context, event, callback) {
     } else {
       twiml.enqueue(
         {
-          action: 'https://hd-partners-5655.twil.io/queue_action',
+          action: `${context.TWILIO_SERVER_URL}/queue_action`,
           method: 'POST',
           waitUrl:
-            `https://hd-partners-5655.twil.io/queue_wait?customerCallSid=${encodeURIComponent(customerCallSid)}&fromNumber=${encodeURIComponent(fromNumber)}&callerName=${encodeURIComponent(callerName)}`
+            `${context.TWILIO_SERVER_URL}/queue_wait?customerCallSid=${encodeURIComponent(customerCallSid)}&fromNumber=${encodeURIComponent(fromNumber)}&callerName=${encodeURIComponent(callerName)}`
         },
         'main'
       );

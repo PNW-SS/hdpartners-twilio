@@ -1,8 +1,8 @@
 const { createClient } = require('@supabase/supabase-js');
 
 exports.handler = async function (context, event, callback) {
-  const supabaseUrl = context.SUPABASE_URL_STAGING;
-  const supabaseKey = context.SUPABASE_API_KEY_STAGING;
+  const supabaseUrl = context.SUPABASE_URL;
+  const supabaseKey = context.SUPABASE_API_KEY;
   const supabase = createClient(supabaseUrl, supabaseKey);
   const client = context.getTwilioClient();
   let operatorsToCall = JSON.parse(decodeURIComponent(event.operatorsToCall));
@@ -43,7 +43,7 @@ exports.handler = async function (context, event, callback) {
         const twiml = new Twilio.twiml.VoiceResponse();
         const gather = twiml.gather({
           numDigits: 1,
-          action: `https://hd-partners-5655.twil.io/add_agent_or_voicemail?currentlyCallingId=${currentlyCalling.id}&callSid=${customerCallSid}`,
+          action: `${context.TWILIO_SERVER_URL}/add_agent_or_voicemail?currentlyCallingId=${currentlyCalling.id}&callSid=${customerCallSid}`,
           method: 'POST',
           timeout: 5,
         });
@@ -51,14 +51,14 @@ exports.handler = async function (context, event, callback) {
         gather.say(`Incoming call from ${callerName}`);
 
         const redirectUrl = operatorsToCall.length > 0
-          ? `https://hd-partners-5655.twil.io/call_additional_operators?customerCallSid=${customerCallSid}&operatorsToCall=${encodeURIComponent(JSON.stringify(operatorsToCall))}`
-          : `https://hd-partners-5655.twil.io/nobody_picked_up?customerCallSid=${customerCallSid}`;
+          ? `${context.TWILIO_SERVER_URL}/call_additional_operators?customerCallSid=${customerCallSid}&operatorsToCall=${encodeURIComponent(JSON.stringify(operatorsToCall))}`
+          : `${context.TWILIO_SERVER_URL}/nobody_picked_up?customerCallSid=${customerCallSid}`;
         twiml.redirect({ method: 'POST' }, redirectUrl);
 
         client.calls
           .create({
             to: currentlyCalling.employees.phone,
-            from: context.TWILIO_NUMBER_STAGING,
+            from: context.TWILIO_NUMBER,
             twiml: twiml.toString(),
           })
           .then(call => {
