@@ -23,26 +23,6 @@ twilio plugins:install @twilio-labs/plugin-serverless
 twilio login
 ```
 
-### 3. Set up GitHub Secrets
-
-Add the following secrets to your GitHub repository:
-
-- `TWILIO_ACCOUNT_SID`: Your Twilio Account SID
-- `TWILIO_API_KEY`: Twilio API Key
-- `TWILIO_API_SECRET`: Twilio API Secret
-- `JWT_SECRET`: JWT Secret for token generation
-- `SUPABASE_API_KEY`: Supabase API Key
-- `SUPABASE_URL`: Supabase URL
-- `ACCOUNT_SID`: Twilio Account SID
-- `TWILIO_NUMBER`: Twilio Phone Number
-- `QUEUE_NAME`: Name of your Twilio Queue
-- `AUTH_TOKEN`: Twilio Auth Token
-- `SUMMARY_SERVICE_SID`: Summary Service SID
-- `FALLBACK_NUMBER`: Fallback Phone Number
-- `DISCORD_WEBHOOK_URL`: Discord Webhook URL
-- `DEVELOPER_SUPPORT_NUMBER`: Developer Support Number
-- `TWILIO_SERVER_URL`: Twilio Server URL
-
 ## Project Structure
 
 ```
@@ -102,7 +82,22 @@ git clone <repository-url>
 npm install
 ```
 
-3. Create `.env` file with required environment variables
+3. Create `.env` file with required environment variable
+- `TWILIO_ACCOUNT_SID`: Your Twilio Account SID
+- `TWILIO_API_KEY`: Twilio API Key
+- `TWILIO_API_SECRET`: Twilio API Secret
+- `JWT_SECRET`: JWT Secret for token generation
+- `SUPABASE_API_KEY`: Supabase API Key
+- `SUPABASE_URL`: Supabase URL
+- `ACCOUNT_SID`: Twilio Account SID
+- `TWILIO_NUMBER`: Twilio Phone Number
+- `QUEUE_NAME`: Name of your Twilio Queue
+- `AUTH_TOKEN`: Twilio Auth Token
+- `SUMMARY_SERVICE_SID`: Summary Service SID
+- `FALLBACK_NUMBER`: Fallback Phone Number
+- `DISCORD_WEBHOOK_URL`: Discord Webhook URL
+- `DEVELOPER_SUPPORT_NUMBER`: Developer Support Number
+- `TWILIO_SERVER_URL`: Twilio Server URL
 
 4. Run locally
 ```bash
