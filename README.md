@@ -1,64 +1,133 @@
-# Deploying Functions & Studio Flows via GitHub Actions
+# Twilio CI/CD Pipeline
 
-This application works as a sample to show how Twilio Functions & Studio Flows
-can be tracked together in one repository and deployed automatically via a
-Continuous Delivery mechanism such as GitHub Actions.
+This repository contains a CI/CD pipeline for deploying Twilio Functions and Studio Flows using GitHub Actions. The pipeline supports automatic deployments to development and production environments based on branch pushes.
+
+## Prerequisites
+
+1. Twilio Account
+2. GitHub Account
+3. Node.js 18.x or later
+
+## Getting Started
+
+### 1. Install Twilio CLI
+
+```bash
+npm install twilio-cli -g
+twilio plugins:install @twilio-labs/plugin-serverless
+```
+
+### 2. Configure Twilio CLI
+
+```bash
+twilio login
+```
+
+### 3. Set up GitHub Secrets
+
+Add the following secrets to your GitHub repository:
+
+- `TWILIO_ACCOUNT_SID`: Your Twilio Account SID
+- `TWILIO_API_KEY`: Twilio API Key
+- `TWILIO_API_SECRET`: Twilio API Secret
+- `JWT_SECRET`: JWT Secret for token generation
+- `SUPABASE_API_KEY`: Supabase API Key
+- `SUPABASE_URL`: Supabase URL
+- `ACCOUNT_SID`: Twilio Account SID
+- `TWILIO_NUMBER`: Twilio Phone Number
+- `QUEUE_NAME`: Name of your Twilio Queue
+- `AUTH_TOKEN`: Twilio Auth Token
+- `SUMMARY_SERVICE_SID`: Summary Service SID
+- `FALLBACK_NUMBER`: Fallback Phone Number
+- `DISCORD_WEBHOOK_URL`: Discord Webhook URL
+- `DEVELOPER_SUPPORT_NUMBER`: Developer Support Number
+- `TWILIO_SERVER_URL`: Twilio Server URL
 
 ## Project Structure
 
 ```
-sample-flows-github-actions
-├── LICENSE
-├── README.md
-├── assets
-├── flows
-├── functions
-├── node_modules
-├── package-lock.json
-├── package.json
-└── scripts
-
-5 directories, 4 files
+.
+├── functions/
+├── assets/
+├── flows/
+├── scripts/
+└── package.json
 ```
 
-### Twilio Functions & Assets
+## GitHub Actions Workflow Explanation
 
-The `functions` and `assets` folders contain any [Twilio Functions & Assets](https://www.twilio.com/functions) you might want to deploy. They'll be deployed using `npm run ci:deploy-functions` that leverages [`twilio-run`](https://npm.im/twilio-run), that is part of the Twilio Serverless Toolkit](https://www.twilio.com/docs/labs/serverless-toolkit).
+The workflow (`twilio-ci.yml`) automates the deployment process:
 
-### Twilio Studio flows
+### Triggers
 
-The `flows` directory is used to store the JSON representation of the [Twilio Studio](https://www.twilio.com/studio) flow we are trying to deploy. In our case that is a `webinar-flow.json` example file. It gets deployed through the `npm run ci:deploy-flows` command that internally runs the `scripts/deployFlows.js` file using the [Twilio Studio API](https://www.twilio.com/docs/studio/rest-api/v2/flow).
+- Activates on pushes to `main` (production) and `dev` (development) branches
 
-### GitHub Actions
+### Environment Selection
 
-You can find the GitHub Actions workflow that is being triggered on each push
-to `main` inside `.github/workflows/deploy.yml`. The logic can be ported to any
-other CI/CD platform that can:
+- Automatically determines environment based on branch:
+  - `main` → production
+  - `dev` → development
 
-1. Can store secrets and set them as environment variables
-1. Install Node.js
-1. Install dependencies from npm
-1. Run npm scripts with environment variables
+### Workflow Steps
 
-## How to use this project
+1. **Checkout Repository**
+   - Uses `actions/checkout@v2` to clone the repository
 
-This project is not intended to immediately work by forking the project.
-Instead it is intended to work as a blueprint for your own projects and to
-understand how the [Studio Flows API](https://www.twilio.com/docs/studio/rest-api/v2/flow) works.
+2. **Node.js Setup**
+   - Installs Node.js 18.x
+   - Includes caching for faster builds
 
-You might have to change:
+3. **Dependencies Installation**
+   - Uses `npm ci` for consistent installations
 
-1. The name of your flows JSON file
-2. Any references to the friendly name in the `deployFlow.js` file to deploy your flow correctly
-3. If your flow triggers a Function make sure that the configuration for those is pointing to the correct Function
-4. Set your Twilio Account SID and Auth Token as `TWILIO_ACCOUNT_SID` and `TWILIO_AUTH_TOKEN` secrets inside GitHub Actions' Secrets Store
+4. **Twilio Deployment**
+   - Installs Twilio CLI and serverless plugin
+   - Deploys functions based on environment:
+     ```bash
+     twilio serverless:deploy \
+       --service-name=inventerra \
+       --environment=$DEPLOY_ENV \
+       --force
+     ```
 
-**Important** We are currently [scoping out on how to add Studio support directly into the Twilio Serverless Toolkit](https://github.com/twilio-labs/twilio-run/issues/145). We'll update this example once that lands but feel free to chime in with feedback.
+## Local Development
 
-## Code of Conduct
+1. Clone the repository
+```bash
+git clone <repository-url>
+```
 
-This template is open source and welcomes contributions. All contributions are subject to our [Code of Conduct](https://github.com/twilio-labs/.github/blob/master/CODE_OF_CONDUCT.md).
+2. Install dependencies
+```bash
+npm install
+```
 
-## License
+3. Create `.env` file with required environment variables
 
-MIT
+4. Run locally
+```bash
+twilio serverless:start
+```
+
+Or to handle external calls on local machine:
+```bash
+twilio serverless:start --ngrok=""
+```
+
+**Note:** Your ngrok URL will need to be entered under one of the development number's URL for calls and messaging (ask admin)
+
+## Deployment Process
+
+1. Push changes to `dev` branch for development deployment
+2. Test changes in development environment
+3. Merge to `main` branch for production deployment
+
+## Troubleshooting
+
+- Verify all GitHub secrets are properly set
+- Check Twilio CLI authentication
+- Review GitHub Actions logs for deployment errors
+
+## Useful Documentation
+
+- [Twilio Serverless Toolkit Documentation](https://www.twilio.com/docs/labs/serverless-toolkit)
