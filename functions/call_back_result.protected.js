@@ -19,7 +19,7 @@ exports.handler = async function (context, event, callback) {
             console.error('Error logging call:', error);
         }
 
-        twiml.play('https://ochre-antelope-4265.twil.io/assets/callback_confirmation.mp3')
+        twiml.play(`${context.TWILIO_SERVER_URL}/callback_confirmation.mp3`)
         twiml.hangup();
     }
     
