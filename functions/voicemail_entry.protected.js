@@ -14,6 +14,7 @@ exports.handler = function (context, event, callback) {
             recordingStatusCallbackEvent: 'completed'
         });
     } catch (error) {
+        console.error('Error:', error);
         const detailedError = JSON.stringify(error, Object.getOwnPropertyNames(error))
         twiml.dial(context.FALLBACK_NUMBER);
         return callback(detailedError, twiml);

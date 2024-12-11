@@ -31,6 +31,7 @@ exports.handler = async function (context, event, callback) {
         availability = 'unavailable';
       }
     } catch (error) {
+      console.error('Error:', error);
       const detailedError = JSON.stringify(error, Object.getOwnPropertyNames(error))
       return callback(detailedError);
     }

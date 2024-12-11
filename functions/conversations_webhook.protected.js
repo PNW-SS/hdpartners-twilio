@@ -47,6 +47,7 @@ exports.handler = async function (context, event, callback) {
     }
 
   } catch (error) {
+    console.error('Error:', error);
     const detailedError = JSON.stringify(error, Object.getOwnPropertyNames(error))
 
     callback(detailedError);

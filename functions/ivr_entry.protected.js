@@ -76,7 +76,7 @@ exports.handler = async function (context, event, callback) {
         input: 'dtmf',
         timeout: 10,
         numDigits: 1,
-        action: `${context.TWILIO_SERVER_URL}/split_on_directory`,
+        action: `${context.TWILIO_SERVER_URL}/split_on_open`,
         method: 'POST'
       })
       gather.play(`${context.TWILIO_SERVER_URL}/bens_or_dir.mp3`);

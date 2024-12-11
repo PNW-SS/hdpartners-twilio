@@ -9,9 +9,7 @@ exports.handler = async function (context, event, callback) {
     const direction = 'outbound'
   
     let error;
-  
-    console.log('outbound callback triggered', event)
-  
+    
     switch (CallStatus) {
       // case 'initiated':
       //   // RPC function here for outbound call
