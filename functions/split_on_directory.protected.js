@@ -4,7 +4,7 @@ exports.handler = async function (context, event, callback) {
         context.SUPABASE_API_KEY
     );
     const twiml = new Twilio.twiml.VoiceResponse();
-    const { Digits, CallSid } = event
+    const { Digits } = event
 
     if (Digits === '1') {
         twiml.say('You have selected the 1 option. Please hold while we connect you to an operator.');

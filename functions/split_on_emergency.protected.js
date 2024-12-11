@@ -4,17 +4,26 @@ exports.handler = function (context, event, callback) {
         context.SUPABASE_API_KEY
     );
     const twiml = new Twilio.twiml.VoiceResponse();
-    const { Digits, CallSid } = event
+    const { Digits } = event
 
-    // Redirect to operator
-    if (Digits === '1') {
+    try {
+        // Redirect to operator
+        if (Digits === '1') {
+
+        // Redirect to voicemail
+        } else if (Digits === '2') {
+            twiml.redirect(`${context.TWILIO_SERVER_URL}/voicemail_entry`);
         
-    // Redirect to voicemail
-    } else if (Digits === '2') {
-        twiml.redirect(`${context.TWILIO_SERVER_URL}/voicemail_entry`);
-    } else {
-        twiml.hangup();
+        // No input
+        } else {
+            twiml.hangup();
+        }
+
+    } catch (error) {
+        const detailedError = JSON.stringify(error, Object.getOwnPropertyNames(error))
+        twiml.dial(context.FALLBACK_NUMBER);
+        return callback(detailedError, twiml);
     }
-    
+
     return callback(null, twiml);
 };

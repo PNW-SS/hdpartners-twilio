@@ -54,7 +54,7 @@ exports.handler = async function (context, event, callback) {
     const isWeekend = ['Saturday', 'Sunday'].includes(day);
   
     // Here the business is considered open M-F, 7am-6pm Pacific Time
-    const isOpen = !isWeekend && hour >= 7 && hour < 18;  //18
+    const isOpen = !isWeekend && hour >= 7 && hour < 15;  //18
   
     let gather;
 

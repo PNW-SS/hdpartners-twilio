@@ -46,6 +46,7 @@ exports.handler = async function (context, event, callback) {
             throw error;
         }
 
+        // TODO: Fix messaging service
         await client.messages.create({
             body: "Thank you for calling Ben's plumbing. Sorry we missed your call. We will get back to you as soon as possible!", // TODO: Maybe in future add client name for personalization
             from: context.TWILIO_PHONE_NUMBER,
