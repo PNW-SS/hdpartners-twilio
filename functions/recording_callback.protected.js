@@ -20,8 +20,6 @@ exports.handler = async function (context, event, callback) {
       throw error;
     }
 
-    console.log("Recording logged successfully");
-
     return callback(null)
 
   } catch (error) {
