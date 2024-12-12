@@ -12,8 +12,6 @@ exports.handler = async function (context, event, callback) {
   const supabaseKey = context.SUPABASE_API_KEY;
   const supabase = createClient(supabaseUrl, supabaseKey);
 
-  console.log('Event:', event);
-
   try {
     let updateParams = {
       friendlyName: friendlyName
