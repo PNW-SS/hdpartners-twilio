@@ -20,7 +20,7 @@ exports.handler = async function (context, event, callback) {
 
     // If call center is not enabled, forward to fallback number
     if (!data.is_enabled) {
-      twiml.dial(fallBackNumber);
+      twiml.dial(context.FALLBACK_NUMBER);
       return callback(null, twiml);
     }
       
