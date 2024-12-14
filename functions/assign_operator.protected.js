@@ -1,24 +1,48 @@
-// assign_operator
+const { createClient } = require('@supabase/supabase-js');
 
+// TODO: add error handling logic
 exports.handler = async function (context, event, callback) {
-    const { createClient } = require('@supabase/supabase-js');
     const supabase = createClient(
       context.SUPABASE_URL,
       context.SUPABASE_API_KEY
     );
+    const client = context.getTwilioClient()
     const twiml = new Twilio.twiml.VoiceResponse();
+
     const { customerCallSid, fromNumber } = event;
   
-    let callerName;
     const callStatus = 'Hunting'
-    
-    console.log('Assign_Operator triggered')
-  
-    try {
-      callerName = JSON.parse(event.callerName);
-    } catch (error) {
-      // caller name is empty
+
+    console.log('Event:', event);
+
+    let callerName = 'Unknown';
+
+    if (event.callerName) {
+      try {
+        callerName = JSON.parse(event.callerName);
+      } catch (error) {
+        // If callerName cannot be parsed
+      }
+    } else {
+      const { data: clientData, error: clientError } = await supabase
+            .from('clients')
+            .select('name')
+            .eq('phone', fromNumber);
+
+        if (clientError) {
+            throw clientError;
+        }
+
+        if (clientData.length > 0) {
+            callerName = clientData[0].name;
+        } else {
+            const phoneNumber = await client.lookups.v2.phoneNumbers(fromNumber)
+                .fetch({ fields: 'caller_name' });
+            callerName = phoneNumber.callerName?.caller_name ? ('Maybe: ' + phoneNumber.callerName?.caller_name) : callerName;
+        }
     }
+
+    console.log('Caller Name:', callerName);
   
     // Initialize the excludeOperatorIds array
     let excludeOperatorIds = event.excludeOperatorIds

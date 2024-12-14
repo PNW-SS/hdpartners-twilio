@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.46.2",
+    "@twilio-labs/serverless-runtime-types": "^4.0.1",
     "@twilio/runtime-handler": "1.2.1",
     "axios": "^1.7.8",
     "expo-server-sdk": "^3.13.0",

@@ -6,6 +6,8 @@ exports.handler = async function (context, event, callback) {
   const supabaseKey = context.SUPABASE_API_KEY;
   const supabase = createClient(supabaseUrl, supabaseKey);
 
+  const twiml = new Twilio.twiml.VoiceResponse();
+
   try {
     const { data, error } = await supabase
       .from('call_operators')
@@ -17,15 +19,19 @@ exports.handler = async function (context, event, callback) {
     }
 
     if (data.length == 0) {
-      // Send push notification warning to all operators that someone needs to enable their availability for callers
-      console.log('No operators with availibity set to true')
+      twiml.play(`${context.TWILIO_SERVER_URL}/no_availabilities_enabled.mp3`)
+      twiml.redirect(`${context.TWILIO_SERVER_URL}/voicemail_entry`)
+    } else {
+      // Notify of recording disclaimer
+      twiml.play(`${context.TWILIO_SERVER_URL}/recording_disclosure.mp3`)
+      twiml.redirect(`${context.TWILIO_SERVER_URL}/assign_operator?fromNumber=${encodeURIComponent(event.From)}&customerCallSid=${event.CallSid}`) // We have to pass these parameters because next function runs recursively
     }
 
-    const resp = JSON.stringify(data)
-    return callback(null, { resp })
+    return callback(null, twiml);
 
   } catch (error) {
     const detailedError = JSON.stringify(error, Object.getOwnPropertyNames(error))
+    twiml.dial(context.FALLBACK_NUMBER);
     return callback(detailedError);
   }
 };

@@ -3,15 +3,14 @@ const { Expo } = require('expo-server-sdk')
 
 exports.handler = async function (context, event, callback) {
   const client = context.getTwilioClient();
-  const conversationsSid = event.conversationID;
+  const conversationsSid = event.ConversationSid;
+  const serviceSid = event.ChatServiceSid;
   const friendlyName = "Development Contact";
-  const incomingNumber = event.incomingNumber;
-  const incomingMessage = event.incomingMessage;
+  const incomingNumber = event.Author;
+  const incomingMessage = event.Body;
   const supabaseUrl = context.SUPABASE_URL;
   const supabaseKey = context.SUPABASE_API_KEY;
   const supabase = createClient(supabaseUrl, supabaseKey);
-
-  console.log('CONVERSATIONS TRIGGERED', event);
 
   try {
     let updateParams = {
@@ -36,10 +35,10 @@ exports.handler = async function (context, event, callback) {
           throw error;
         }
 
-        if (data.length > 0){
+        if (data.length > 0) {
           attributes.name = data[0].name;
         }
-        
+
       } catch (error) {
         console.log("Error getting contact information for conversation or did not find contact:", error);
       }
@@ -61,6 +60,8 @@ exports.handler = async function (context, event, callback) {
           throw error;
         }
 
+        console.log("attributes:", attributes);
+
         const formattedName = formatPhoneNumber(attributes.name)
 
         data.forEach(operator => {
@@ -73,10 +74,10 @@ exports.handler = async function (context, event, callback) {
     }
 
     // Update the conversation's friendly name and attributes (if necessary)
-    await client.conversations.v1.conversations(conversationsSid).update(updateParams);
+    await client.conversations.v1.services(serviceSid).conversations(conversationsSid).update(updateParams);
 
     // Fetch the list of participants in the conversation
-    const participants = await client.conversations.v1.conversations(conversationsSid).participants.list();
+    const participants = await client.conversations.v1.services(serviceSid).conversations(conversationsSid).participants.list();
 
     // Check if shared_user_identity is already a participant
     const isParticipant = participants.find(
@@ -85,7 +86,7 @@ exports.handler = async function (context, event, callback) {
 
     if (!isParticipant) {
       // If shared_user_identity is not a participant, add them
-      const participant = await client.conversations.v1.conversations(conversationsSid).participants.create({
+      const participant = await client.conversations.v1.services(serviceSid).conversations(conversationsSid).participants.create({
         identity: 'shared_user_identity'
       });
 
@@ -114,6 +115,7 @@ exports.handler = async function (context, event, callback) {
           // Create an array of promises to remove the participant from each conversation
           const removeParticipantPromises = conversationsToRemoveParticipant.map(pc =>
             client.conversations.v1
+              .services(serviceSid)
               .conversations(pc.conversationSid)
               .participants('shared_user_identity')
               .remove()

@@ -12,13 +12,13 @@ exports.handler = async function (context, event, callback) {
   
     const operatorId = parseClientString(Caller);
     const customerCallSid = CallSid
-  
-    console.log('Outbound Handler event ', event)
-  
+    
     let callerName = 'Unknown'
     let fromNumber = To
   
     if (To !== 'queue') { // Create outbound dial
+
+      console.log('callerID', context.TWILIO_NUMBER)
   
       const dial = twiml.dial({
         action: `${context.TWILIO_SERVER_URL}/outbound_action?operatorId=${encodeURIComponent(operatorId)}&customerCallSid=${customerCallSid}`,
