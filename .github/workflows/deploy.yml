@@ -1,4 +1,4 @@
-name: Twilio CI
+name: inventerra
 
 # Trigger the workflow on pushes to main and dev branches
 on:

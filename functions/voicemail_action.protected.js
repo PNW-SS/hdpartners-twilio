@@ -34,13 +34,13 @@ exports.handler = async function (context, event, callback) {
 
         const { error } = await supabase
             .from('calls')
-            .insert({
+            .upsert({
                 call_sid: CallSid,
                 from_number: From,
                 call_status: callStatus,
                 caller_name: callerName,
                 end_time: endTime
-            });
+            }, { onConflict: ['call_sid'] });
 
         if (error) {
             throw error;
@@ -54,6 +54,7 @@ exports.handler = async function (context, event, callback) {
         });
 
     } catch (error) {
+        console.error('Error:', error);
         const detailedError = JSON.stringify(error, Object.getOwnPropertyNames(error))
         twiml.dial(context.FALLBACK_NUMBER);
         return callback(detailedError, twiml);

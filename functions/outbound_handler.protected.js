@@ -12,9 +12,7 @@ exports.handler = async function (context, event, callback) {
   
     const operatorId = parseClientString(Caller);
     const customerCallSid = CallSid
-  
-    console.log('Outbound Handler event ', event)
-  
+    
     let callerName = 'Unknown'
     let fromNumber = To
   

@@ -11,9 +11,7 @@ exports.handler = async function (context, event, callback) {
     const fromNumber = From
     const callerName = 'Unknown'
     const endTime = new Date().toISOString();
-  
-    console.log('Call status change: ', event)
-    
+      
     if (CallStatus === 'completed' || CallStatus === 'no-answer') {
       
       // Call the RPC function to run end call logic

@@ -73,6 +73,7 @@ exports.handler = async function (context, event, callback) {
       }
     })
     .catch((error) => {
+      console.error("Error checking if queue is empty", error);
       const detailedError = JSON.stringify(error, Object.getOwnPropertyNames(error))
       callback(detailedError);
     });
