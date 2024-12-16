@@ -42,6 +42,10 @@ exports.handler = async function (context, event, callback) {
         }
     }
 
+    if (event.ForwardedFrom == '+14257728708') {
+      callerName += ' (Brandon Foward)';
+    }
+
     console.log('Caller Name:', callerName);
   
     // Initialize the excludeOperatorIds array

@@ -7,7 +7,7 @@ exports.handler = async function (context, event, callback) {
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     const twiml = new Twilio.twiml.VoiceResponse();
-    const client = context.getTwilioClient()
+    const client = context.getTwilioClient();
 
     const callStatus = 'Voicemail';
     const endTime = new Date().toISOString();
@@ -30,6 +30,10 @@ exports.handler = async function (context, event, callback) {
             const phoneNumber = await client.lookups.v2.phoneNumbers(From)
                 .fetch({ fields: 'caller_name' });
             callerName = phoneNumber.callerName?.caller_name ? ('Maybe: ' + phoneNumber.callerName?.caller_name) : callerName;
+        }
+
+        if (event.ForwardedFrom == '+14257728708') {
+            callerName += ' (Brandon Foward)';
         }
 
         const { error } = await supabase
