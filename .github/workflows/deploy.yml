@@ -56,6 +56,7 @@ jobs:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           DEVELOPER_SUPPORT_NUMBER: ${{ secrets.DEVELOPER_SUPPORT_NUMBER }}
           TWILIO_SERVER_URL: ${{ secrets.TWILIO_SERVER_URL }}
+          TENANT_IDENTIFIER: ${{ secrets.TENANT_IDENTIFIER }}
         run: |
           # Install Twilio CLI globally
           npm install twilio-cli -g

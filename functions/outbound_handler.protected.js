@@ -10,7 +10,7 @@ exports.handler = async function (context, event, callback) {
     const client = context.getTwilioClient();
     let twiml = new Twilio.twiml.VoiceResponse();
   
-    const operatorId = parseClientString(Caller);
+    const operatorId = extractMiddleNumbers(Caller);
     const customerCallSid = CallSid
     
     let callerName = 'Unknown'
@@ -94,14 +94,25 @@ exports.handler = async function (context, event, callback) {
     }
   
     if (reserveData[0].operator_busy || reserveData[0].call_already_ended) {
-      console.log('Cannot proceed with call: busy')
-      return callback(null)
+      console.error('Operator busy or call already ended');
+      return callback('Operator busy or call already ended');
     }
   
     return callback(null, twiml);
   };
-  
-  function parseClientString(str) {
-    const match = str.match(/^client:(\d+)$/);
-    return match ? parseInt(match[1], 10) : null;
-  }
+
+  function extractMiddleNumbers(inputString) {
+    // Define the regex pattern to capture digits between two colons
+    const regex = /:(\d+):/;
+    
+    // Execute the regex on the input string
+    const match = inputString.match(regex);
+    
+    // If a match is found, return the captured digits
+    if (match && match[1]) {
+        return match[1];
+    }
+    
+    // If no match is found, return null
+    return null;
+}

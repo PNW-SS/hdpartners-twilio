@@ -7,40 +7,15 @@ exports.handler = async function (context, event, callback) {
     const { CallStatus, customerCallSid, callerName, fromNumber } = event;
     const operatorId = JSON.parse(event.operatorId);
     const direction = 'outbound'
-  
+
+    console.log("operatorId", operatorId)
+
     let error;
     
     switch (CallStatus) {
-      // case 'initiated':
-      //   // RPC function here for outbound call
-      //   const { data, error: initiatingError } = await supabase.rpc(
-      //     'outbound_assign_operator',
-      //     {
-      //       operator_id: operatorId,
-      //       customer_call_sid: customerCallSid,
-      //       customer_caller_name: callerName,
-      //       customer_from_number: fromNumber,
-      //       customer_call_status: 'Initiated'
-      //     }
-      //   );
-  
-      //   console.log('initiated on outbound callback')
-  
-      //   error = initiatingError
-  
       case 'ringing': {
         const { error: ringingError } = await supabase
           .from('calls')
-          // .upsert(
-          //   {
-          //     call_sid: customerCallSid,
-          //     call_status: 'Ringing',
-          //     from_number: fromNumber,
-          //     caller_name: callerName,
-          //     direction: direction
-          //   }, {
-          //   onConflict: 'call_sid'
-          // })
           .update(
             {
               call_status: 'Ringing',
