@@ -2,7 +2,7 @@ const { createClient } = require('@supabase/supabase-js');
 const twilio = require("twilio");
 
 exports.handler = async function (context, event, callback) {
-  const client = twilio(context.TWILIO_ACCOUNT_SID, context.TWILIO_AUTH_TOKEN);
+  const client = twilio(context.TWILIO_ACCOUNT_SID, context.AUTH_TOKEN);
   const supabaseUrl = context.SUPABASE_URL;
   const supabaseKey = context.SUPABASE_API_KEY;
   const supabase = createClient(supabaseUrl, supabaseKey);
