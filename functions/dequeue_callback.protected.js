@@ -26,5 +26,5 @@ exports.handler = async function(context, event, callback) {
   }
 
   // Two parties about to be connected
-  return callback(null);
+  return callback(null, '<Response></Response>');
 };

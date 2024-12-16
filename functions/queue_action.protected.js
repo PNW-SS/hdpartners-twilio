@@ -35,6 +35,6 @@ exports.handler = async function (context, event, callback) {
     }
   } else {
     console.log('Call redirected out of the queue')
-    return callback(null);
+    return callback(null, '<Response></Response>');
   }
 }

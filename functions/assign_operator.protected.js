@@ -98,7 +98,7 @@ exports.handler = async function (context, event, callback) {
             JSON.stringify(operator.id)
           )}&customerCallSid=${encodeURIComponent(customerCallSid)}&fromNumber=${encodeURIComponent(fromNumber)}&callerName=${encodeURIComponent(callerName)}`,
           statusCallbackMethod: 'POST',
-        }, operator.id
+        }, operator.id + ':' + context.TENANT_IDENTIFIER
       );
   
       client.parameter({
