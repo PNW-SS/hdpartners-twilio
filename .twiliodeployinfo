@@ -1,8 +1,0 @@
-{
-  "commands": {
-    "deploy": {
-      "loadSystemEnv": true,
-      "env": ".env.example"
-    }
-  }
-}
