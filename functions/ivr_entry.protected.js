@@ -8,6 +8,10 @@ exports.handler = async function (context, event, callback) {
 
   const twiml = new Twilio.twiml.VoiceResponse();
 
+  // DEV SKIP to assign operator
+  twiml.redirect(`${context.TWILIO_SERVER_URL}/check_any_available_operators`);
+  return callback(null, twiml);
+
   // Check if call center is enabled
   try {
     const { data, error } = await supabase
@@ -83,8 +87,8 @@ exports.handler = async function (context, event, callback) {
       })
 
       if (isWeezies) {
-        gather.say('Thank you for calling Weezies Plumbing. We recently joined forces with Bens Plumbing. Press 1 to reach Weezies Plumbing or press 2 for directory.');
-        gather.say('Thank you for calling Weezies Plumbing. We recently joined forces with Bens Plumbing. Press 1 to reach Weezies Plumbing or press 2 for directory.'); // Play twice for emphasis
+        gather.play(`${context.TWILIO_SERVER_URL}/weezies_or_dir.mp3`);
+        gather.play(`${context.TWILIO_SERVER_URL}/weezies_or_dir.mp3`); // Play twice for emphasis
       } else {
         gather.play(`${context.TWILIO_SERVER_URL}/bens_or_dir.mp3`);
         gather.play(`${context.TWILIO_SERVER_URL}/bens_or_dir.mp3`); // Play twice for emphasis
