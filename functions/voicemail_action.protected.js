@@ -4,6 +4,7 @@ exports.handler = async function (context, event, callback) {
     const { CallSid, From } = event;
     const supabaseUrl = context.SUPABASE_URL;
     const supabaseKey = context.SUPABASE_API_KEY;
+    const isWeezies = context.SECONDARY_NUMBERS.split(',').includes(event.ForwardedFrom);
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     const twiml = new Twilio.twiml.VoiceResponse();
@@ -32,8 +33,11 @@ exports.handler = async function (context, event, callback) {
             callerName = phoneNumber.callerName?.caller_name ? ('Maybe: ' + phoneNumber.callerName?.caller_name) : callerName;
         }
 
-        if (event.ForwardedFrom == '+14257728708') {
-            callerName += ' (Brandon Foward)';
+        let companyName = 'Ben\'s Plumbing';
+
+        if (isWeezies) {
+            callerName += ' (Weezies)';
+            companyName = 'Weezies Plumbing';
         }
 
         const { error } = await supabase
@@ -52,8 +56,8 @@ exports.handler = async function (context, event, callback) {
 
         // TODO: Fix messaging service
         await client.messages.create({
-            body: "Thank you for calling Ben's plumbing. Sorry we missed your call. We will get back to you as soon as possible!", // TODO: Maybe in future add client name for personalization
-            from: context.TWILIO_PHONE_NUMBER,
+            body: "Thank you for calling " + companyName + ". Sorry we missed your call. We will get back to you as soon as possible!", // TODO: Maybe in future add client name for personalization
+            from: context.TWILIO_NUMBER,
             to: From
         });
 
