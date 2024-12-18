@@ -9,8 +9,8 @@ exports.handler = async function (context, event, callback) {
   const twiml = new Twilio.twiml.VoiceResponse();
 
   // DEV SKIP to assign operator
-  twiml.redirect(`${context.TWILIO_SERVER_URL}/check_any_available_operators`);
-  return callback(null, twiml);
+  // twiml.redirect(`${context.TWILIO_SERVER_URL}/check_any_available_operators`);
+  // return callback(null, twiml);
 
   // Check if call center is enabled
   try {
