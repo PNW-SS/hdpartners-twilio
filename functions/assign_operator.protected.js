@@ -9,11 +9,11 @@ exports.handler = async function (context, event, callback) {
     const client = context.getTwilioClient()
     const twiml = new Twilio.twiml.VoiceResponse();
 
+    const isWeezies = context.SECONDARY_NUMBERS.split(',').includes(event.ForwardedFrom);
+
     const { customerCallSid, fromNumber } = event;
   
     const callStatus = 'Hunting'
-
-    console.log('Event:', event);
 
     let callerName = 'Unknown';
 
@@ -42,11 +42,9 @@ exports.handler = async function (context, event, callback) {
         }
     }
 
-    if (event.ForwardedFrom == '+14257728708') {
-      callerName += ' (Brandon Foward)';
+    if (isWeezies && !callerName.includes('Weezies')) {
+        callerName += ' (Weezies)';
     }
-
-    console.log('Caller Name:', callerName);
   
     // Initialize the excludeOperatorIds array
     let excludeOperatorIds = event.excludeOperatorIds

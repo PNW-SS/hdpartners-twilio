@@ -57,6 +57,8 @@ jobs:
           DEVELOPER_SUPPORT_NUMBER: ${{ secrets.DEVELOPER_SUPPORT_NUMBER }}
           TWILIO_SERVER_URL: ${{ secrets.TWILIO_SERVER_URL }}
           TENANT_IDENTIFIER: ${{ secrets.TENANT_IDENTIFIER }}
+          TWILIO_CALLER_ID: ${{ secrets.TWILIO_CALLER_ID }}
+          SECONDARY_NUMBERS: ${{ secrets.SECONDARY_NUMBERS }}
         run: |
           # Install Twilio CLI globally
           npm install twilio-cli -g

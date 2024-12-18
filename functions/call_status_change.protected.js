@@ -7,9 +7,10 @@ exports.handler = async function (context, event, callback) {
     );
   
     const { CallStatus, CallSid, From } = event;
+    const isWeezies = context.SECONDARY_NUMBERS.split(',').includes(event.ForwardedFrom);
   
     const fromNumber = From
-    const callerName = 'Unknown'
+    const callerName = isWeezies ? 'Unknown (Weezies)' : 'Unknown';
     const endTime = new Date().toISOString();
       
     if (CallStatus === 'completed' || CallStatus === 'no-answer') {

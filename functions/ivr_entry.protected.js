@@ -4,6 +4,8 @@ exports.handler = async function (context, event, callback) {
   const supabase = createClient(context.SUPABASE_URL, context.SUPABASE_API_KEY);
   const { From } = event;
 
+  const isWeezies = context.SECONDARY_NUMBERS.split(',').includes(event.ForwardedFrom);
+
   const twiml = new Twilio.twiml.VoiceResponse();
 
   // Check if call center is enabled
@@ -54,7 +56,7 @@ exports.handler = async function (context, event, callback) {
     const isWeekend = ['Saturday', 'Sunday'].includes(day);
   
     // Here the business is considered open M-F, 7am-6pm Pacific Time
-    const isOpen = !isWeekend && hour >= 7 && hour < 15;  //18
+    const isOpen = !isWeekend && hour >= 7 && hour < 18;  //18
   
     let gather;
 
@@ -79,8 +81,14 @@ exports.handler = async function (context, event, callback) {
         action: `${context.TWILIO_SERVER_URL}/split_on_open`,
         method: 'POST'
       })
-      gather.play(`${context.TWILIO_SERVER_URL}/bens_or_dir.mp3`);
-      gather.play(`${context.TWILIO_SERVER_URL}/bens_or_dir.mp3`); // Play twice for emphasis
+
+      if (isWeezies) {
+        gather.say('Thank you for calling Weezies Plumbing. We recently joined forces with Bens Plumbing. Press 1 to reach Weezies Plumbing or press 2 for directory.');
+        gather.say('Thank you for calling Weezies Plumbing. We recently joined forces with Bens Plumbing. Press 1 to reach Weezies Plumbing or press 2 for directory.'); // Play twice for emphasis
+      } else {
+        gather.play(`${context.TWILIO_SERVER_URL}/bens_or_dir.mp3`);
+        gather.play(`${context.TWILIO_SERVER_URL}/bens_or_dir.mp3`); // Play twice for emphasis
+      }
     }
 
     return callback(null, twiml);
