@@ -12,9 +12,7 @@ exports.handler = async function (context, event, callback) {
     const operatorId = event.operatorId;
   
     const endTime = new Date().toISOString();
-  
-    console.log('outbound action triggered', event)
-  
+    
     if (operatorId && (['no-answer', 'busy', 'failed', 'canceled'].includes(dialCallStatus))) { 
       let newStatus = 'available';
   
@@ -49,5 +47,3 @@ exports.handler = async function (context, event, callback) {
     
     return callback(null, twiml);
   };
-  
-  

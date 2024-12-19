@@ -1,7 +1,7 @@
 const { createClient } = require('@supabase/supabase-js');
 
 exports.handler = async function (context, event, callback) {
-  const client = new Twilio(context.TWILIO_ACCOUNT_SID, context.TWILIO_AUTH_TOKEN);
+  const client = context.getTwilioClient();
   const supabaseUrl = context.SUPABASE_URL;
   const supabaseKey = context.SUPABASE_API_KEY;
   const supabase = createClient(supabaseUrl, supabaseKey);
@@ -33,7 +33,7 @@ exports.handler = async function (context, event, callback) {
       throw error;
     }
 
-    return callback(null);
+    return callback(null, '<Response></Response>');
 
   } catch (error) {
     console.error(error);

@@ -4,6 +4,5 @@
       "loadSystemEnv": true,
       "env": ".env.example"
     }
-  },
-  "serviceSid": "ZS013e66bc1d753d397f4877ea932122a8"
+  }
 }

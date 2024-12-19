@@ -3,6 +3,7 @@ const { Expo } = require('expo-server-sdk')
 
 exports.handler = async function (context, event, callback) {
   const client = context.getTwilioClient();
+  const tenantIdentity = context.TENANT_IDENTIFIER;
   const conversationsSid = event.ConversationSid;
   const serviceSid = event.ChatServiceSid;
   const friendlyName = "Development Contact";
@@ -21,7 +22,7 @@ exports.handler = async function (context, event, callback) {
       lastMessage: incomingMessage ? incomingMessage : "Attachment"
     };
 
-    if (incomingNumber !== 'shared_user_identity') {
+    if (incomingNumber !== tenantIdentity) {
       attributes.name = incomingNumber;
       attributes.phone = incomingNumber;
 
@@ -79,20 +80,20 @@ exports.handler = async function (context, event, callback) {
     // Fetch the list of participants in the conversation
     const participants = await client.conversations.v1.services(serviceSid).conversations(conversationsSid).participants.list();
 
-    // Check if shared_user_identity is already a participant
+    // Check if tenantIdentity is already a participant
     const isParticipant = participants.find(
-      participant => participant.identity === 'shared_user_identity'
+      participant => participant.identity === tenantIdentity
     );
 
     if (!isParticipant) {
-      // If shared_user_identity is not a participant, add them
+      // If tenantIdentity is not a participant, add them
       const participant = await client.conversations.v1.services(serviceSid).conversations(conversationsSid).participants.create({
-        identity: 'shared_user_identity'
+        identity: tenantIdentity
       });
 
       client.conversations.v1.participantConversations
         .list({
-          identity: 'shared_user_identity',
+          identity: tenantIdentity,
           limit: 150
         })
         .then(participantConversations => {
@@ -105,11 +106,11 @@ exports.handler = async function (context, event, callback) {
           const conversationsToRemove = sortedParticipantConversations.length - 99;
 
           if (conversationsToRemove <= 0) {
-            console.log('shared_user_identity is already in 99 or fewer conversations');
+            console.log('tenantIdentity is already in 99 or fewer conversations');
             return;
           }
 
-          // Remove 'shared_user_identity' from the oldest conversations
+          // Remove tenantIdentity from the oldest conversations
           const conversationsToRemoveParticipant = sortedParticipantConversations.slice(0, conversationsToRemove);
 
           // Create an array of promises to remove the participant from each conversation
@@ -117,7 +118,7 @@ exports.handler = async function (context, event, callback) {
             client.conversations.v1
               .services(serviceSid)
               .conversations(pc.conversationSid)
-              .participants('shared_user_identity')
+              .participants(tenantIdentity)
               .remove()
           );
 
@@ -125,7 +126,7 @@ exports.handler = async function (context, event, callback) {
           return Promise.all(removeParticipantPromises);
         })
         .then(() => {
-          console.log(`Removed shared_user_identity from the oldest conversations. Remaining conversations: 99`);
+          console.log(`Removed tenantIdentity from the oldest conversations. Remaining conversations: 99`);
         })
         .catch(err => console.error(err));
     }
