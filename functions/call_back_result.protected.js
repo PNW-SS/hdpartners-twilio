@@ -12,7 +12,7 @@ exports.handler = async function (context, event, callback) {
         // TODO: Send push notification to available operators that a callback was requested
         const { error } = await supabase
             .from('calls')
-            .update({ call_status: 'Callback' })
+            .update({ call_status: 'callback' })
             .eq('call_sid', CallSid)
 
         if (error) {
@@ -22,6 +22,6 @@ exports.handler = async function (context, event, callback) {
         twiml.play(`${context.TWILIO_SERVER_URL}/callback_confirmation.mp3`)
         twiml.hangup();
     }
-    
+
     return callback(null, twiml);
 };

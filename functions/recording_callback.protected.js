@@ -1,6 +1,6 @@
 
 const { createClient } = require('@supabase/supabase-js');
-
+// V2 APPROVED (NOTE)
 exports.handler = async function (context, event, callback) {
   const supabaseUrl = context.SUPABASE_URL;
   const supabaseKey = context.SUPABASE_API_KEY;
@@ -12,7 +12,7 @@ exports.handler = async function (context, event, callback) {
   try {
     const { data, error } = await supabase
       .from('calls')
-      .update({ recording_sid: recordingSid})
+      .update({ recording_sid: recordingSid })
       .eq('call_sid', callSid);
 
     if (error) {

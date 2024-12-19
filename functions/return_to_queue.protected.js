@@ -63,7 +63,7 @@ async function triggerCallOperators(operatorsToCall, supabase, twiml, client, ca
     try {
       const { data, error } = await supabase
         .from('calls')
-        .select('call_sid, caller_name')
+        .select('call_sid, call_name')
         .eq('call_sid', callSid)
         .single();
 
@@ -71,8 +71,8 @@ async function triggerCallOperators(operatorsToCall, supabase, twiml, client, ca
         throw error
       }
 
-      if (data.caller_name) {
-        callerName = data.caller_name;
+      if (data.call_name) {
+        callerName = data.call_name;
       }
 
     } catch (error) {
@@ -150,12 +150,12 @@ async function getAvailableOperatorToCall(supabase, client) {
 }
 
 async function checkCallerCallIsActive(client, callSid) {
-    const queuedCalls = await client.calls.list({ status: 'queued' });
-    const ringingCalls = await client.calls.list({ status: 'ringing' });
-    const inProgressCalls = await client.calls.list({ status: 'in-progress' });
+  const queuedCalls = await client.calls.list({ status: 'queued' });
+  const ringingCalls = await client.calls.list({ status: 'ringing' });
+  const inProgressCalls = await client.calls.list({ status: 'in-progress' });
 
-    const calls = [...queuedCalls, ...ringingCalls, ...inProgressCalls];
-    const callNumbers = calls.map(call => call.sid);
+  const calls = [...queuedCalls, ...ringingCalls, ...inProgressCalls];
+  const callNumbers = calls.map(call => call.sid);
 
-    return callNumbers.includes(callSid);
+  return callNumbers.includes(callSid);
 }

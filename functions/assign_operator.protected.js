@@ -14,7 +14,7 @@ exports.handler = async function (context, event, callback) {
 
   const { customerCallSid, fromNumber } = event;
 
-  const callStatus = 'Hunting'
+  const callStatus = 'hunting'
 
   let callerName = 'Unknown';
 
@@ -38,8 +38,8 @@ exports.handler = async function (context, event, callback) {
       callerName = clientData[0].name;
     } else {
       const phoneNumber = await client.lookups.v2.phoneNumbers(fromNumber)
-        .fetch({ fields: 'caller_name' });
-      callerName = phoneNumber.callerName?.caller_name ? ('Maybe: ' + phoneNumber.callerName?.caller_name) : callerName;
+        .fetch({ fields: 'call_name' });
+      callerName = phoneNumber.callerName?.call_name ? ('Maybe: ' + phoneNumber.callerName?.call_name) : callerName;
     }
   }
 
@@ -58,7 +58,7 @@ exports.handler = async function (context, event, callback) {
     {
       exclude_ids: excludeOperatorIds,
       customer_call_sid: customerCallSid,
-      customer_caller_name: callerName,
+      customer_call_name: callerName,
       customer_from_number: fromNumber,
       customer_call_status: callStatus
     }
@@ -105,7 +105,7 @@ exports.handler = async function (context, event, callback) {
     );
 
     client.parameter({
-      name: 'caller_name',
+      name: 'call_name',
       value: callerName
     });
 

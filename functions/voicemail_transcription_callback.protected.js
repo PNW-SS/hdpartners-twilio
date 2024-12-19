@@ -1,5 +1,5 @@
 const { createClient } = require('@supabase/supabase-js');
-
+// V2 APPROVED (NOTE)
 exports.handler = async function (context, event, callback) {
 
   // Create a Supabase client instance
@@ -25,11 +25,11 @@ exports.handler = async function (context, event, callback) {
     console.log('Transcription updated successfully')
 
     return callback(null);
-    
+
   } catch (error) {
-    
+
     const detailedError = JSON.stringify(error, Object.getOwnPropertyNames(error))
-    
+
     return callback(detailedError);
   }
 };

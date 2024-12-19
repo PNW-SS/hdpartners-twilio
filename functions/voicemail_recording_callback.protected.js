@@ -1,5 +1,5 @@
 const { createClient } = require('@supabase/supabase-js');
-
+// V2 APPROVED (NOTE)
 exports.handler = async function (context, event, callback) {
   const { CallSid } = event;
 
@@ -37,11 +37,11 @@ exports.handler = async function (context, event, callback) {
     }
 
     console.log('Voicemail uploaded successfully:', data);
-    
+
     return callback(null);
   } catch (error) {
     const detailedError = JSON.stringify(error, Object.getOwnPropertyNames(error))
-    
+
     return callback(detailedError);
   }
 };

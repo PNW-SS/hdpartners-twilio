@@ -1,5 +1,4 @@
 const { createClient } = require('@supabase/supabase-js');
-
 exports.handler = async function (context, event, callback) {
     const { CallSid, From } = event;
     const supabaseUrl = context.SUPABASE_URL;
@@ -10,8 +9,7 @@ exports.handler = async function (context, event, callback) {
     const twiml = new Twilio.twiml.VoiceResponse();
     const client = context.getTwilioClient();
 
-    const callStatus = 'Voicemail';
-    const endTime = new Date().toISOString();
+    const callStatus = 'voicemail';
     try {
         // Get caller name
         let callerName = 'Unknown';
@@ -29,8 +27,8 @@ exports.handler = async function (context, event, callback) {
             callerName = clientData[0].name;
         } else {
             const phoneNumber = await client.lookups.v2.phoneNumbers(From)
-                .fetch({ fields: 'caller_name' });
-            callerName = phoneNumber.callerName?.caller_name ? ('Maybe: ' + phoneNumber.callerName?.caller_name) : callerName;
+                .fetch({ fields: 'call_name' });
+            callerName = phoneNumber.callerName?.call_name ? ('Maybe: ' + phoneNumber.callerName?.call_name) : callerName;
         }
 
         let companyName = 'Ben\'s Plumbing';
@@ -39,14 +37,13 @@ exports.handler = async function (context, event, callback) {
             callerName += ' (Wezee)';
             companyName = 'Wezee Plumbing';
         }
-
         const { error } = await supabase
             .from('calls')
             .upsert({
                 call_sid: CallSid,
                 from_number: From,
                 call_status: callStatus,
-                caller_name: callerName,
+                call_name: callerName, // Caller name is now stored in calls_participants (TODO)
                 end_time: endTime
             }, { onConflict: ['call_sid'] });
 

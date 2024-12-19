@@ -17,7 +17,7 @@ exports.handler = async function (context, event, callback) {
   try {
     const { data, error } = await supabase
       .from('calls')
-      .select('call_sid, caller_name')
+      .select('call_sid, call_name')
       .eq('call_sid', customerCallSid)
       .single();
 
@@ -25,8 +25,8 @@ exports.handler = async function (context, event, callback) {
       throw error
     }
 
-    if (data.caller_name) {
-      callerName = data.caller_name;
+    if (data.call_name) {
+      callerName = data.call_name;
     }
 
   } catch (error) {

@@ -1,5 +1,5 @@
 const { createClient } = require('@supabase/supabase-js');
-
+// V2 APPROVED (NOTE)
 exports.handler = async function (context, event, callback) {
   const client = context.getTwilioClient();
   const supabaseUrl = context.SUPABASE_URL;

@@ -61,7 +61,7 @@ async function checkQueueSize(client, queueSid, callback, supabase, context, cal
         throw callError;
       }
 
-      const callerName = callData.caller_name ? callData.caller_name : "Unknown"
+      const callerName = callData.call_name ? callData.call_name : "Unknown"
 
       const sendTextPromises = data.map(operator => {
         const phoneNumber = operator.employees.phone;

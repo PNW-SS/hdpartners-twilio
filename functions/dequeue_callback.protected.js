@@ -1,10 +1,10 @@
 
-exports.handler = async function(context, event, callback) {
+exports.handler = async function (context, event, callback) {
   const { createClient } = require('@supabase/supabase-js');
   const supabase = createClient(
     context.SUPABASE_URL,
     context.SUPABASE_API_KEY
-  );	
+  );
 
   const { CallSid, operatorId } = event
 
@@ -12,7 +12,7 @@ exports.handler = async function(context, event, callback) {
 
   const { error } = await supabase
     .from('calls')
-    .update({ call_status: 'In-progress', operator: operatorId })
+    .update({ call_status: 'in-progress', operator: operatorId })
     .eq('call_sid', CallSid)
 
 
