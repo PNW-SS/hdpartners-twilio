@@ -28,23 +28,6 @@ exports.handler = async function (context, event, callback) {
         error = ringingError;
         break;
       }
-      // Intiated is currently handling the ringing state as well but may need to seperate
-      // case 'ringing': {
-      //   const { error: ringingError } = await supabase
-      //     .from('calls')
-      //     .upsert(
-      //       {
-      //         call_sid: customerCallSid,
-      //         call_status: 'Ringing',
-      //         operator: operatorId,
-      //         from_number: fromNumber,
-      //         caller_name: callerName,
-      //       }, {
-      //       onConflict: 'call_sid'
-      //     })
-      //   error = ringingError;
-      //   break;
-      // }
   
       case 'in-progress': {
         const { error: answeredError } = await supabase
@@ -59,7 +42,8 @@ exports.handler = async function (context, event, callback) {
         const { error: availablityError } = await supabase
           .from('call_operators')
           .update({ status: 'available', designated_call_sid: null })
-          .eq('id', operatorId);
+          .eq('id', operatorId)
+          .eq('designated_call_sid', customerCallSid);
         error = availablityError
         break;
     }
