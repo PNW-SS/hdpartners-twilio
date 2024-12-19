@@ -43,8 +43,8 @@ exports.handler = async function (context, event, callback) {
     }
   }
 
-  if (isWeezies && !callerName.includes('Weezies')) {
-    callerName += ' (Weezies)';
+  if (isWeezies && !callerName.includes('Wezee')) {
+    callerName += ' (Wezee)';
   }
 
   // Initialize the excludeOperatorIds array

@@ -41,7 +41,8 @@ exports.handler = async function (context, event, callback) {
         const { error: availablityError } = await supabase
           .from('call_operators')
           .update({ status: 'available', designated_call_sid: null })
-          .eq('id', operatorId);
+          .eq('id', operatorId)
+          .eq('designated_call_sid', customerCallSid);
         error = availablityError
         break;
     }

@@ -20,7 +20,8 @@ exports.handler = async function (context, event, callback) {
       const { error: operatorError } = await supabase
         .from('call_operators')
         .update({ status: newStatus, designated_call_sid: null })
-        .eq('id', operatorId);
+        .eq('id', operatorId)
+        .eq('designated_call_sid', customerCallSid);
   
       if (operatorError) {
         console.error('Error updating operator status:', operatorError);

@@ -26,7 +26,7 @@ exports.handler = async function (context, event, callback) {
         throw error
       }
 
-      return callback(null);
+      return callback(null, '<Response></Response>');
 
     } catch (error) {
       console.error('Error:', error);

@@ -36,8 +36,8 @@ exports.handler = async function (context, event, callback) {
         let companyName = 'Ben\'s Plumbing';
 
         if (isWeezies) {
-            callerName += ' (Weezies)';
-            companyName = 'Weezies Plumbing';
+            callerName += ' (Wezee)';
+            companyName = 'Wezee Plumbing';
         }
 
         const { error } = await supabase
