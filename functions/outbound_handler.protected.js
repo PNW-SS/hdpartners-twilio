@@ -93,7 +93,7 @@ exports.handler = async function (context, event, callback) {
   
     if (reserveData[0].operator_busy || reserveData[0].call_already_ended) {
       console.error('Operator busy or call already ended');
-      return callback('Operator busy or call already ended');
+      return callback(null, '<Response><Hangup/></Response>');
     }
   
     return callback(null, twiml);
